@@ -4,9 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,22 +15,43 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        VBox vbx = new VBox(); //Anything you put in a VBox is going to be added in a vertical way
-        //elements are displayed in vertical order.
-        vbx.setSpacing(20);//vertical spacing, adding spacing in a vertical way
-        HBox hbx = new HBox(); //displays elements in a horizontal way
-        hbx.setSpacing(20);//horizontal spacing, adding spacing in a horizontal way
-        hbx.setAlignment(Pos.CENTER);
-        Button btn1 = new Button("Button 1");
-        Button btn2 = new Button("Button 2");
-        Label lab = new Label("Label 1");
-        TextField T1 = new TextField();
-        //add all these components to our VBox
-        hbx.getChildren().addAll(btn2, btn1);
-        vbx.getChildren().addAll(lab, T1);
+        //The sahep in notes:
+        //we need two labels
+        Label total = new Label("Total Value: 0.0-");
+        Label pl = new Label("P/L: 0.0");
+        //Need three textfields symbol, number of shares, price
+        TextField symbol = new TextField();
+        symbol.setPromptText("Symbol");
+        symbol.setTooltip(new Tooltip("Enter Symbol"));
+        TextField price = new TextField();
+        price.setPromptText("Price");
+        price.setTooltip(new Tooltip("Enter Price"));
+        TextField shares = new TextField();
+        shares.setPromptText("Shares");
+        shares.setTooltip(new Tooltip("Enter number Shares"));
+        //two buttons buy and sell
+        Button buy = new Button("Buy");
+        Button sell = new Button("Sell");
+        HBox hbxLabel = new HBox();
+        hbxLabel.setAlignment(Pos.BASELINE_LEFT);
+        hbxLabel.setSpacing(10);
+        hbxLabel.getChildren().addAll(total, pl);
         BorderPane root = new BorderPane();
-        root.setCenter(hbx);
-        root.setLeft(vbx);
+        //HBox for the text fields
+        HBox hbxText = new HBox();
+        hbxText.setAlignment(Pos.BASELINE_RIGHT);
+        hbxText.setSpacing(10);
+        hbxText.getChildren().addAll(symbol, shares, price);
+        //HBox for the bottons
+        ButtonBar btnBar = new ButtonBar();
+        btnBar.getButtons().addAll(buy, sell);
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+        vbox.setAlignment(Pos.BASELINE_LEFT);
+        vbox.getChildren().addAll(hbxText, btnBar);
+
+        root.setBottom(vbox);
+        root.setTop(hbxLabel);
         Scene scene = new Scene(root, 500, 300);
         stage.setTitle("Hello!");
         stage.setScene(scene);
